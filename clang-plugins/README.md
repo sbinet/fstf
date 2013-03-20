@@ -149,8 +149,6 @@ $ hwaf
 $ hwaf shell
 [hwaf] $ cd src/clang-refactor/tests/DeclTypeRename
 [hwaf] $ ./test.sh
-
-```
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/binet/tmp/clang/work/src/clang-refactor/tests/DeclTypeRename
@@ -205,6 +203,7 @@ Scanning dependencies of target foo
 [100%] Building CXX object CMakeFiles/foo.dir/foo.cpp.o
 Linking CXX executable foo
 [100%] Built target foo
+```
 
 ### yaml-cpp
 
