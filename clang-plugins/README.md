@@ -205,3 +205,20 @@ Scanning dependencies of target foo
 [100%] Building CXX object CMakeFiles/foo.dir/foo.cpp.o
 Linking CXX executable foo
 [100%] Built target foo
+
+### yaml-cpp
+
+```sh
+$ curl -O -L https://yaml-cpp.googlecode.com/files/yaml-cpp-0.5.0.tar.gz
+$ tar zxf yaml-cpp-0.5.0.tar.gz
+$ cd .. && mkdir build && cd build
+$ cmake ../yaml-cpp-0.5.0 
+   -DBUILD_SHARED_LIBS=ON \
+   -DCMAKE_INSTALL_PREFIX=../0.5.0/x86_64-slc6-gcc47-opt \
+   -DBOOST_ROOT=/afs/cern.ch/sw/lcg/external/Boost/1.50.0_python2.7/x86_64-slc6-gcc47-opt
+$ make -j8
+$ make install
+
+$ export PKG_CONFIG_PATH=`pwd`/../0.5.0/x86_64-slc6-gcc47-opt/lib/pkgconfig
+```
+
