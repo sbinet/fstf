@@ -207,6 +207,9 @@ Linking CXX executable foo
 
 ### yaml-cpp
 
+``yaml-cpp`` is a dependency of ``clang-refactor``.
+Here are some instructions on how to build and install it...
+
 ```sh
 $ curl -O -L https://yaml-cpp.googlecode.com/files/yaml-cpp-0.5.0.tar.gz
 $ tar zxf yaml-cpp-0.5.0.tar.gz
