@@ -121,3 +121,87 @@ static edm::InputSourcePluginFactory g_static_edm_namespace;
 1 warning generated.
 2 warnings generated.
 ```
+
+
+## clang-refactor
+
+``clang-refactor`` is a plugin to seamlessly refactor ``C++`` code at
+the ``AST`` level
+
+It is available from
+[github](http://github.com/lukhnos/refactorial) and has
+been hwaf-ified over [there](http://github.com/sbinet/clang-refactor)
+
+### installation
+
+```sh
+# hwaf usual dance
+$ hwaf init work
+$ hwaf setup work
+$ cd work
+
+# real install
+$ hwaf pkg co -b=wip/hwaf git://github.com/sbinet/clang-refactor clang-refactor
+$ hwaf configure
+$ hwaf
+
+# test
+$ hwaf shell
+[hwaf] $ cd src/clang-refactor/tests/DeclTypeRename
+[hwaf] $ ./test.sh
+
+```
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/binet/tmp/clang/work/src/clang-refactor/tests/DeclTypeRename
+Scanning dependencies of target foo
+[100%] Building CXX object CMakeFiles/foo.dir/foo.cpp.o
+Linking CXX executable foo
+[100%] Built target foo
+Running CMake to regenerate build system...
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/binet/tmp/clang/work/src/clang-refactor/tests/DeclTypeRename
+Warning: No files selected. Operating on all files.
+TypeRenameTransform
+Processing: /home/binet/tmp/clang/work/src/clang-refactor/tests/DeclTypeRename/foo.cpp.
+Ignoring: /usr/include/.*
+renames: class A::Foo -> Foobar
+renames: class A::(\w) -> \1\1
+--- foo.orig.h	2013-03-20 13:46:03.000000000 +0100
++++ foo.h	2013-03-20 13:53:39.000000000 +0100
+@@ -9,34 +9,34 @@
+     int x;
+   };
+     
+-  class P {};
+-  class X : virtual P {};
+-  class Y : virtual P {};
+-  class Foo : public X, virtual Y {
++  class PP {};
++  class XX : virtual PP {};
++  class YY : virtual PP {};
++  class Foobar : public XX, virtual YY {
+   protected:
+     int x;
+   public:
+-    Foo() : x(0) {}
+-    Foo(int px) : x(px) {}
++    Foobar() : x(0) {}
++    Foobar(int px) : x(px) {}
+     
+-     ~Foo ()  {  }
++     ~Foobar ()  {  }
+   };  
+
+[...]
+-Foo foo3(Foo a, Foo* b, Foo& c, Foo***)
++Foobar foo3(Foobar a, Foobar* b, Foobar& c, Foobar***)
+ {
+-  return Foo(5);
++  return Foobar(5);
+ }
+Scanning dependencies of target foo
+[100%] Building CXX object CMakeFiles/foo.dir/foo.cpp.o
+Linking CXX executable foo
+[100%] Built target foo
