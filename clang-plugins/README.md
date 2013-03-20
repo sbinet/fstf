@@ -94,7 +94,7 @@ $ hwaf setup work
 $ cd work
 
 # real install
-$ hwaf pkg co git://github.com/sbinet/clang-cms
+$ hwaf pkg co -b=wip/hwaf git://github.com/sbinet/clang-cms
 $ hwaf configure
 $ hwaf
 
