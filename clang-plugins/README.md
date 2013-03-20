@@ -19,6 +19,10 @@ svn co http://llvm.org/svn/llvm-project/compiler-rt/branches/release_32 compiler
 cd ../../
 mkdir llvm
 cd llvm
+# drop "svn" suffix from version string
+sed -i 's/3\.2svn/3.2/g' ../llvm-src/configure
+
+# configure
 ../llvm-src/configure \
    --prefix=/some/path \
    --libdir=/some/path/lib \
