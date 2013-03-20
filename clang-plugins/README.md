@@ -17,8 +17,8 @@ svn co http://llvm.org/svn/llvm-project/cfe/branches/release_32 clang
 cd ../../llvm-src/projects
 svn co http://llvm.org/svn/llvm-project/compiler-rt/branches/release_32 compiler-rt
 cd ../../
-mkdir llvm
-cd llvm
+mkdir build
+cd build
 # drop "svn" suffix from version string
 sed -i 's/3\.2svn/3.2/g' ../llvm-src/configure
 
