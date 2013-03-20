@@ -36,3 +36,43 @@ sed -i 's/3\.2svn/3.2/g' ../llvm-src/configure
 make REQUIRES_RTTI=1 -j8
 make install
 ```
+
+## clang-fmt
+
+``clang-fmt`` is a backport of ``clang-format`` from the (not yet
+released) ``clang-3.3`` version.
+
+It is available from [clang-fmt](http://github.com/sbinet/clang-fmt)
+
+### installation
+
+```sh
+# hwaf usual dance
+$ hwaf init work
+$ hwaf setup work
+$ cd work
+
+# real install
+$ hwaf pkg co git://github.com/sbinet/clang-fmt
+$ hwaf configure
+$ hwaf
+```
+
+### example
+
+```sh
+$ cat > foo.cxx
+namespace Ns {class bar{
+int m_int    ; public:
+bar ( ) ; void some_meth(const int & an_int ) ;};} //> namespace Ns
+
+$ clang-fmt --style=Google foo.cxx
+namespace Ns {
+class bar {
+  int m_int;
+ public:
+  bar();
+  void some_meth(const int& an_int);
+};
+}  //> namespace Ns
+```
