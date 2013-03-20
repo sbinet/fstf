@@ -82,8 +82,8 @@ class bar {
 ``clang-cms`` is a plugin from the CMS experiment to check for various
 multi-thread codesmells.
 It is available from
-(Twiki)[https://twiki.cern.ch/twiki/bin/view/Main/ClangCms] and has
-been hwaf-ified over (there)[http://github.com/sbinet/clang-cms]
+[Twiki](https://twiki.cern.ch/twiki/bin/view/Main/ClangCms) and has
+been hwaf-ified over [there](http://github.com/sbinet/clang-cms)
 
 ### installation
 
