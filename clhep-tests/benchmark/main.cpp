@@ -292,7 +292,7 @@ double CLHEP_MxN(){
   return timing;
 }
 
-double Eigen_MxN(double clhep){
+void Eigen_MxN(double clhep){
   Matrix<double, 5, 3> a;
   Matrix<double, 3, 5> b;
   Matrix<double, 5, 5> c;
@@ -311,7 +311,7 @@ double Eigen_MxN(double clhep){
   cout << c << endl;
 }
 
-double SMatrix_MxN(double clhep){
+void SMatrix_MxN(double clhep){
   double ar[15] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
   double timing;
   SMatrix53 a(ar, 15);
