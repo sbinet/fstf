@@ -333,12 +333,13 @@ void IPP_MxN(double clhep){
   Ipp64f b[15] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
   Ipp64f c[25];
 
-  int stride1 = sizeof(Ipp64f)*4;
+  int stride1 = sizeof(Ipp64f)*5;
   int stride2 = sizeof(Ipp64f);
+  int stride3 = sizeof(Ipp64f)*3;
 
   start_clock();
   for(int i = 0; i < N; i++)
-    ippmMul_mm_64f(a, stride1, stride2, 5, 3, b, stride1, stride2, 3, 5, c, stride1, stride2);
+    ippmMul_mm_64f(a, stride3, stride2, 3, 5, b, stride1, stride2, 5, 3, c, stride1, stride2);
   timing = stop_clock();
   cout << "MxN IPP: " << timing << "\nSpeedup vs CLHEP: " << clhep/timing << endl;
 
