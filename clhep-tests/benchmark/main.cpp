@@ -9,12 +9,18 @@
 #include <CLHEP/Geometry/Transform3D.h>
 #include <root/Math/SMatrix.h>
 #include <mkl.h>
+#include <ipp.h>
 
 #include "testAVX.h"
 
 using namespace std;
 
 double start, end;
+
+void ippinfo(void){
+  const IppLibraryVersion* lib = ippsGetLibVersion();
+  cout << lib->Name << lib->Version << lib->Version << lib->major << lib->majorBuild << lib->build << endl;
+}
 
 void start_clock(){
   start = omp_get_wtime();
@@ -177,6 +183,25 @@ void SMatrix_multiply(double clhep){
   printSMatrix(c);
 }
 
+void IPP_multiply(double clhep){
+  double timing;
+  Ipp64f a[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+  Ipp64f b[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+  Ipp64f c[16];
+
+  int stride1 = sizeof(Ipp64f)*4;
+  int stride2 = sizeof(Ipp64f);
+
+  start_clock();
+  for(int i = 0; i < N; i++)
+    ippmMul_mm_64f(a, stride1, stride2, 4, 4, b, stride1, stride2, 4, 4, c, stride1, stride2);
+  timing = stop_clock();
+  cout << "IPP: " << timing << "\nSpeedup vs CLHEP: " << clhep/timing << endl;
+  ippinfo();
+
+  printdgemm(c, 4, 4);
+}
+
 double CLHEP_complex(){
   HepMatrix a(5, 3), b(3, 5), c(5, 5);
   double timing;
@@ -267,7 +292,7 @@ double CLHEP_MxN(){
   return timing;
 }
 
-double Eigen_MxN(double clhep){
+void Eigen_MxN(double clhep){
   Matrix<double, 5, 3> a;
   Matrix<double, 3, 5> b;
   Matrix<double, 5, 5> c;
@@ -286,7 +311,7 @@ double Eigen_MxN(double clhep){
   cout << c << endl;
 }
 
-double SMatrix_MxN(double clhep){
+void SMatrix_MxN(double clhep){
   double ar[15] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
   double timing;
   SMatrix53 a(ar, 15);
@@ -302,6 +327,25 @@ double SMatrix_MxN(double clhep){
   printSMatrix(c);
 }
 
+void IPP_MxN(double clhep){
+  double timing;
+  Ipp64f a[15] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
+  Ipp64f b[15] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
+  Ipp64f c[25];
+
+  int stride1 = sizeof(Ipp64f)*5;
+  int stride2 = sizeof(Ipp64f);
+  int stride3 = sizeof(Ipp64f)*3;
+
+  start_clock();
+  for(int i = 0; i < N; i++)
+    ippmMul_mm_64f(a, stride3, stride2, 3, 5, b, stride1, stride2, 5, 3, c, stride1, stride2);
+  timing = stop_clock();
+  cout << "MxN IPP: " << timing << "\nSpeedup vs CLHEP: " << clhep/timing << endl;
+
+  printdgemm(c, 5, 5);
+}
+
 int main(){
   double clhep = CLHEP_multiply();
   Basic_multiply(clhep);
@@ -309,6 +353,7 @@ int main(){
   MKL_multiply(clhep);
   Eigen_multiply(clhep);
   SMatrix_multiply(clhep);
+  IPP_multiply(clhep);
 
   cout << "\n\n";
 
@@ -316,6 +361,7 @@ int main(){
   MKL_complex(clhep, 1, 0);
   Eigen_MxN(clhep);
   SMatrix_MxN(clhep);
+  IPP_MxN(clhep);
 
   cout << "\n\n";
 
